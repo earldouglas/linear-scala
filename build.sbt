@@ -3,52 +3,51 @@ inThisBuild(
   List(
     scalaVersion := V.scala213,
     crossScalaVersions := List(V.scala213, V.scala212, V.scala211),
-    organization := "com.example",
-    homepage := Some(url("https://github.com/com/example")),
-    licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
-    developers := List(
-      Developer(
-        "example-username",
-        "Example Full Name",
-        "example@email.com",
-        url("https://example.com")
-      )
-    ),
+    organization := "com.earldouglas",
+    homepage := Some(url("https://github.com/earldouglas/linear-scala")),
+    licenses := List(("ISC", url("https://opensource.org/licenses/ISC"))),
+    developers := List(Developer("earldouglas", "James Earl Douglas", "james@earldouglas.com", url("https://earldouglas.com"))),
     addCompilerPlugin(scalafixSemanticdb),
-    scalacOptions ++= List(
-      "-Yrangepos",
-      "-P:semanticdb:synthetics:on"
-    )
+    scalacOptions ++=
+      List( "-Yrangepos"
+          , "-P:semanticdb:synthetics:on"
+          )
   )
 )
 
 publish / skip := true
 
-lazy val rules = project.settings(
-  moduleName := "scalafix",
-  libraryDependencies += "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion
-)
+lazy val library = // a standard dependency providing the `Linear` type
+  project
+    .settings( moduleName := "linear-scala"
+             , crossPaths := false // publish without the Scala version postfix in artifact names
+             )
 
-lazy val input = project.settings(
-  publish / skip := true
-)
+lazy val rules = // a Scalafix dependency providing the `LinearTypes` rule
+  project
+    .settings( moduleName := "linear-scala-scalafix"
+             , libraryDependencies += "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion
+             )
 
-lazy val output = project.settings(
-  publish / skip := true
-)
+lazy val input = // sample input to use for testing; annotated with expected errors
+  project
+    .settings(publish / skip := true)
+    .dependsOn(rules)
+    .dependsOn(library)
 
-lazy val tests = project
-  .settings(
-    publish / skip := true,
-    libraryDependencies += "ch.epfl.scala" % "scalafix-testkit" % V.scalafixVersion % Test cross CrossVersion.full,
-    Compile / compile :=
-      (Compile / compile).dependsOn(input / Compile / compile).value,
-    scalafixTestkitOutputSourceDirectories :=
-      (output / Compile / unmanagedSourceDirectories).value,
-    scalafixTestkitInputSourceDirectories :=
-      (input / Compile / unmanagedSourceDirectories).value,
-    scalafixTestkitInputClasspath :=
-      (input / Compile / fullClasspath).value,
-  )
-  .dependsOn(rules)
-  .enablePlugins(ScalafixTestkitPlugin)
+lazy val output = // empty since we're building a linter and not a rewriter, but needed by scalafix-testkit
+  project
+    .settings(publish / skip := true)
+
+lazy val tests = // boilerplate to be able to use scalafix-testkit
+  project
+    .settings( publish / skip := true
+             , libraryDependencies += "ch.epfl.scala" % "scalafix-testkit" % V.scalafixVersion % Test cross CrossVersion.full
+             , Compile / compile := (Compile / compile).dependsOn(input / Compile / compile).value
+             , scalafixTestkitOutputSourceDirectories := (output / Compile / unmanagedSourceDirectories).value
+             , scalafixTestkitInputSourceDirectories := (input / Compile / unmanagedSourceDirectories).value
+             , scalafixTestkitInputClasspath := (input / Compile / fullClasspath).value
+             )
+    .dependsOn(rules)
+    .dependsOn(library)
+    .enablePlugins(ScalafixTestkitPlugin)
