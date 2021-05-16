@@ -1,4 +1,5 @@
 lazy val V = _root_.scalafix.sbt.BuildInfo
+
 inThisBuild(
   List(
     scalaVersion := V.scala213,
