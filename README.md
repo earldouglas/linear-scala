@@ -37,3 +37,9 @@ See the [example project](example/).
 * https://scalameta.org/docs/trees/guide.html
 * https://scalameta.org/docs/semanticdb/guide.html
 * https://www.javadoc.io/doc/org.scalameta/trees_2.13/latest/scala/meta/Name.html
+
+### Linear Types
+
+* https://gitlab.haskell.org/ghc/ghc/-/wikis/linear-types
+* https://en.wikipedia.org/wiki/Substructural_type_system#Linear_type_systems
+* https://github.com/ryanorendorff/lc-2018-linear-types
