@@ -27,6 +27,16 @@ Two artifacts are published:
 
 See the [example project](example/).
 
+## Publishing
+
+```
+$ sbt
+> set ThisBuild / version := "0.0.1"
+> library/publishSigned
+> +rules/publishSigned
+> sonatypeBundleRelease
+```
+
 ## References
 
 ### Scalafix
