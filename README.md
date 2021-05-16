@@ -8,12 +8,16 @@ Scalafix linter.
 
 ## Usage
 
-Mix in the `com.earldouglas.linearscala.Linear` interface to prevent
-values from being under/over used.
+Mix in the `Linear` interface to prevent values from being
+under/over-used.
  
 ```scala
-case class Box(value: Int) extends Linear
+import com.earldouglas.linearscala.Linear
 
+case class Box(value: Int) extends Linear
+```
+
+```scala
 trait UnusedField {
   val box: Box = Box(42) // error: box is never used
 }
