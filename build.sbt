@@ -1,18 +1,18 @@
 lazy val V = _root_.scalafix.sbt.BuildInfo
+
 inThisBuild(
-  List(
-    scalaVersion := V.scala213,
-    crossScalaVersions := List(V.scala213, V.scala212, V.scala211),
-    organization := "com.earldouglas",
-    homepage := Some(url("https://github.com/earldouglas/linear-scala")),
-    licenses := List(("ISC", url("https://opensource.org/licenses/ISC"))),
-    developers := List(Developer("earldouglas", "James Earl Douglas", "james@earldouglas.com", url("https://earldouglas.com"))),
-    addCompilerPlugin(scalafixSemanticdb),
-    scalacOptions ++=
-      List( "-Yrangepos"
-          , "-P:semanticdb:synthetics:on"
-          )
-  )
+  List( scalaVersion := V.scala213
+      , crossScalaVersions := List(V.scala213, V.scala212, V.scala211)
+      , organization := "com.earldouglas"
+      , homepage := Some(url("https://github.com/earldouglas/linear-scala"))
+      , licenses := List(("ISC", url("https://opensource.org/licenses/ISC")))
+      , developers := List(Developer("earldouglas", "James Earl Douglas", "james@earldouglas.com", url("https://earldouglas.com")))
+      , addCompilerPlugin(scalafixSemanticdb)
+      , scalacOptions ++=
+          List( "-Yrangepos"
+              , "-P:semanticdb:synthetics:on"
+              )
+      )
 )
 
 publish / skip := true
