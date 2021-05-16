@@ -1,4 +1,5 @@
 [![Build status](https://github.com/earldouglas/linear-scala/workflows/build/badge.svg)](https://github.com/earldouglas/linear-scala/actions)
+![Latest version](https://img.shields.io/github/tag/earldouglas/linear-scala.svg)
 
 # linear-scala
 
