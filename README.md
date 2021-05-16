@@ -1,4 +1,5 @@
 [![Build status](https://github.com/earldouglas/linear-scala/workflows/build/badge.svg)](https://github.com/earldouglas/linear-scala/actions)
+![Latest version](https://img.shields.io/github/tag/earldouglas/linear-scala.svg)
 
 # linear-scala
 
@@ -26,6 +27,16 @@ Two artifacts are published:
 ## Usage
 
 See the [example project](example/).
+
+## Publishing
+
+```
+$ sbt
+> set ThisBuild / version := "0.0.1"
+> library/publishSigned
+> +rules/publishSigned
+> sonatypeBundleRelease
+```
 
 ## References
 

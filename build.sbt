@@ -12,6 +12,7 @@ inThisBuild(
           List( "-Yrangepos"
               , "-P:semanticdb:synthetics:on"
               )
+      , versionScheme := Some("semver-spec")
       )
 )
 
