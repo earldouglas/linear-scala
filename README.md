@@ -1,3 +1,5 @@
+[![Build status](https://github.com/earldouglas/linear-scala/workflows/build/badge.svg)](https://github.com/earldouglas/linear-scala/actions)
+
 # linear-scala
 
 linear-scala adds support for linear types in Scala via a custom
