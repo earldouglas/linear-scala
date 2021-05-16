@@ -30,13 +30,13 @@ See the [example project](example/).
 ### Scalafix
 
 * https://scalacenter.github.io/scalafix/docs/developers/tutorial.html
-* https://www.javadoc.io/doc/ch.epfl.scala/scalafix-core_2.13/latest/scalafix/patch/Patch$.html
+* https://www.javadoc.io/doc/ch.epfl.scala/scalafix-core_2.13/latest/scalafix/index.html
 
 ### Scalameta
 
 * https://scalameta.org/docs/trees/guide.html
 * https://scalameta.org/docs/semanticdb/guide.html
-* https://www.javadoc.io/doc/org.scalameta/trees_2.13/latest/scala/meta/Name.html
+* https://www.javadoc.io/doc/org.scalameta/trees_2.13/latest/scala/meta/index.html
 
 ### Linear Types
 
