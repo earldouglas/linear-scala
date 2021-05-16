@@ -48,13 +48,11 @@ $ sbt tests/test
 
 ## Publishing
 
-Two artifacts are published:
+Two modules are published from this project:
 
 * *linear-scala*: a standard dependency providing the `Linear` type
 * *linear-scala-scalafix*: a Scalafix dependency providing the
   `LinearTypes` rule
-
-## Publishing
 
 ```
 $ sbt
