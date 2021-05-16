@@ -17,15 +17,11 @@ import com.earldouglas.linearscala.Linear
 case class Box(value: Int) extends Linear
 ```
 
+Find values that are never used:
+
 ```scala
 trait UnusedField {
   val box: Box = Box(42) // error: box is never used
-}
-
-trait FieldUsedTwice {
-  val box: Box = Box(42)
-  println(box) // error: box is used twice
-  println(box) // error: box is used twice
 }
 
 trait UnusedParameter {
@@ -35,6 +31,16 @@ trait UnusedParameter {
 
 trait UnusedMethod {
   def foo(): Box = Box(42) // error: foo is never used
+}
+```
+
+Find values that are used multiple times:
+
+```scala
+trait FieldUsedTwice {
+  val box: Box = Box(42)
+  println(box) // error: box is used twice
+  println(box) // error: box is used twice
 }
 ```
 
