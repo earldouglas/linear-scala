@@ -4,21 +4,34 @@ import com.earldouglas.linearscala.Linear
 
 case class Box(value: Int) extends Linear
 
-object Example {
+trait UnusedField {
+  val box: Box = Box(42)
+}
 
-  val x: Box = Box(1)
-  println(x)
-  println(x)
+trait FieldUsedOnce {
+  val box: Box = Box(42)
+  println(box)
+}
 
-  val y: Box = Box(2)
+trait FieldUsedTwice {
+  val box: Box = Box(42)
+  println(box)
+  println(box)
+}
 
-  def foo(a: Box, b: Box): Box = a
-  /*
+trait UnusedParameter {
+  def foo(x: Box, y: Box): Int =
+    x.value
+}
 
+trait UnusedMethod {
+  def foo(): Box = Box(42)
+}
+
+trait UnusedValue {
   def foo(): Unit = {
-    val y: Box = Box(2)
-    println(y)
-    println(y)
+    val x: Box = Box(42)
+    println(x)
+    println(x)
   }
-  */
 }
