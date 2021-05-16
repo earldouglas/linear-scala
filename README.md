@@ -6,6 +6,36 @@
 linear-scala adds support for linear types in Scala via a custom
 Scalafix linter.
 
+## Usage
+
+Mix in the `com.earldouglas.linearscala.Linear` interface to prevent
+values from being under/over used.
+ 
+```scala
+case class Box(value: Int) extends Linear
+
+trait UnusedField {
+  val box: Box = Box(42) // error: box is never used
+}
+
+trait FieldUsedTwice {
+  val box: Box = Box(42)
+  println(box) // error: box is used twice
+  println(box) // error: box is used twice
+}
+
+trait UnusedParameter {
+  def foo(x: Box, y: Box): Int = // error: y is never used
+    x.value
+}
+
+trait UnusedMethod {
+  def foo(): Box = Box(42) // error: foo is never used
+}
+```
+
+See the [example project](example/) for more.
+
 ## Testing
 
 Using scalafix-testkit:
@@ -18,17 +48,11 @@ $ sbt tests/test
 
 ## Publishing
 
-Two artifacts are published:
+Two modules are published from this project:
 
 * *linear-scala*: a standard dependency providing the `Linear` type
 * *linear-scala-scalafix*: a Scalafix dependency providing the
   `LinearTypes` rule
-
-## Usage
-
-See the [example project](example/).
-
-## Publishing
 
 ```
 $ sbt
