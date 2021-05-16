@@ -1,4 +1,4 @@
-package tests
+package example
 
 import com.earldouglas.linearscala.Linear
 
