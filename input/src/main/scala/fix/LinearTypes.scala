@@ -8,7 +8,8 @@ import com.earldouglas.linearscala.Linear
 case class Box(value: Int) extends Linear
 
 trait UnusedField {
-  val box: Box = Box(42) // assert: LinearTypes
+  val box: Box = // assert: LinearTypes
+    Box(42)
 }
 
 trait FieldUsedOnce {
@@ -28,7 +29,8 @@ trait UnusedParameter {
 }
 
 trait UnusedMethod {
-  def foo(): Box = Box(42) // assert: LinearTypes
+  def foo(): Box = // assert: LinearTypes
+    Box(42)
 }
 
 trait UnusedValue {

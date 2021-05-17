@@ -5,7 +5,8 @@ import com.earldouglas.linearscala.Linear
 case class Box(value: Int) extends Linear
 
 trait UnusedField {
-  val box: Box = Box(42) // error: box is never used
+  val box: Box = // error: box is never used
+    Box(42)
 }
 
 trait FieldUsedOnce {
@@ -25,7 +26,8 @@ trait UnusedParameter {
 }
 
 trait UnusedMethod {
-  def foo(): Box = Box(42) // error: foo is never used
+  def foo(): Box = // error: foo is never used
+    Box(42)
 }
 
 trait UnusedValue {
