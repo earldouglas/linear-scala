@@ -3,24 +3,9 @@ rule = LinearTypes
 */
 package fix
 
-import com.earldouglas.linearscala.Linear
-
-case class Box(value: Int) extends Linear
-
 trait UnusedField {
   val box: Box = // assert: LinearTypes
     Box(42)
-}
-
-trait FieldUsedOnce {
-  val box: Box = Box(42)
-  println(box)
-}
-
-trait FieldUsedTwice {
-  val box: Box = Box(42)
-  println(box) // assert: LinearTypes
-  println(box) // assert: LinearTypes
 }
 
 trait UnusedParameter {
@@ -39,4 +24,12 @@ trait UnusedValue {
     println(x) // assert: LinearTypes
     println(x) // assert: LinearTypes
   }
+}
+
+trait UnusedBinding {
+  for {
+    x <- Some(Box(6)) // assert: LinearTypes
+    y <- Some(Box(7)) // assert: LinearTypes
+    z <- Some(Box(42))
+  } yield z
 }
