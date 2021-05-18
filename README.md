@@ -75,7 +75,8 @@ trait FieldUsedTwice {
 }
 ```
 
-See the tests in [input/src/main/scala/fix/] for more examples.
+See the tests in [input/src/main/scala/fix/](input/src/main/scala/fix/)
+for more examples.
 
 ## Testing
 
