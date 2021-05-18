@@ -6,6 +6,41 @@
 linear-scala adds support for linear types in Scala via a custom
 Scalafix linter.
 
+## Setup
+
+*project/plugins.sbt:*
+
+```
+addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.9.27")
+```
+
+*build.sbt*:
+
+```scala
+lazy val V = _root_.scalafix.sbt.BuildInfo
+
+libraryDependencies += "com.earldouglas" % "linear-scala" % "0.0.1"
+
+inThisBuild(
+  List( scalaVersion := V.scala213
+      , scalafixDependencies += "com.earldouglas" %% "linear-scala-scalafix" % "0.0.1"
+      , scalafixScalaBinaryVersion := CrossVersion.binaryScalaVersion(scalaVersion.value)
+      , semanticdbEnabled := true // enable SemanticDB
+      , semanticdbVersion := scalafixSemanticdb.revision // use Scalafix compatible version
+      )
+)
+
+scalafixOnCompile := true
+```
+
+*.scalafix.conf*:
+
+```
+rules = [
+  LinearTypes
+]
+```
+
 ## Usage
 
 Mix in the `Linear` interface to prevent values from being
@@ -28,10 +63,6 @@ trait UnusedParameter {
   def foo(x: Box, y: Box): Int = // error: y is never used
     x.value
 }
-
-trait UnusedMethod {
-  def foo(): Box = Box(42) // error: foo is never used
-}
 ```
 
 Find values that are used multiple times:
@@ -44,14 +75,14 @@ trait FieldUsedTwice {
 }
 ```
 
-See the [example project](example/) for more.
+See the tests in [input/src/main/scala/fix/] for more examples.
 
 ## Testing
 
 Using scalafix-testkit:
 
 ```
-$ sbt tests/test
+$ sbt
 > tests/test
 [info] All tests passed.
 ```
