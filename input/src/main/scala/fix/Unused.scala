@@ -3,6 +3,8 @@ rule = LinearTypes
 */
 package fix
 
+import com.earldouglas.linearscala.Linear
+
 /**
  * Don't allow a [[Box]] field to be created but never dereferenced.
  */
@@ -15,12 +17,15 @@ trait UnusedField {
  * Don't allow a [[Box]] parameter to be declared but never dereferenced.
  */
 trait UnusedParameter {
-  def foo(x: Box, y: Box): Int = // assert: LinearTypes
+  def foo(
+    x: Box,
+    y: Box // assert: LinearTypes
+  ): Int =
     x.value
 }
 
 /**
- * Don't allow a [[Box]] method to be created but never dereferenced.
+ * Don't allow a [[Box]] method to be created but never called.
  */
 trait UnusedMethod {
   def foo(): Box = // assert: LinearTypes
@@ -46,4 +51,25 @@ trait UnusedBinding {
     y <- Some(Box(7)) // assert: LinearTypes
     z <- Some(Box(42))
   } yield z
+}
+
+/**
+ * Don't allow a field with a [[Linear]] structural type to be
+ * created but never dereferenced.
+ */
+trait UnusedFieldWithStructuralType {
+  val x: Int with Linear = // assert: LinearTypes
+    42.asInstanceOf[Int with Linear]
+}
+
+/**
+ * Don't allow a parameter with a [[Linear]] structural type to be
+ * declared but never dereferenced.
+ */
+trait UnusedParameterWithStructuralType {
+  def foo(
+    x: Int,
+    y: Int with Linear // assert: LinearTypes
+  ): Int =
+    42
 }
