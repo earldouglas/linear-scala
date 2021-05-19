@@ -8,6 +8,8 @@ Scalafix linter.
 
 ## Setup
 
+Configure your project to use Scalafix with SemanticDB enabled.
+
 *project/plugins.sbt:*
 
 ```
@@ -52,7 +54,7 @@ import com.earldouglas.linearscala.Linear
 case class Box(value: Int) extends Linear
 ```
 
-Find values that are never used:
+Scalafix finds values that are never used:
 
 ```scala
 trait UnusedField {
@@ -65,7 +67,7 @@ trait UnusedParameter {
 }
 ```
 
-Find values that are used multiple times:
+Scalafix also finds values that are used multiple times:
 
 ```scala
 trait FieldUsedTwice {
