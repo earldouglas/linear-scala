@@ -3,6 +3,8 @@ rule = LinearTypes
 */
 package fix
 
+import com.earldouglas.linearscala.Linear
+
 /**
  * Don't allow a [[Box]] field to be dereferenced more than once.
  */
@@ -28,4 +30,14 @@ trait BindingUsedTwice {
     y <- Some(Box(7))
     z <- Some(Box(x.value * y.value)) // assert: LinearTypes
   } yield (x, y, z) // assert: LinearTypes
+}
+
+/**
+ * Don't allow a field with a [[Linear]] structural type to be
+ * dereferenced more than once.
+ */
+trait FieldWithStructuralTypeUsedTwice {
+  val x: Int with Linear = 42.asInstanceOf[Int with Linear]
+  println(x) // assert: LinearTypes
+  println(x) // assert: LinearTypes
 }

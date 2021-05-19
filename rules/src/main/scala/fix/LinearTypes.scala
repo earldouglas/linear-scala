@@ -22,28 +22,37 @@ final class LinearTypes extends SemanticRule("LinearTypes") {
   override val isLinter: Boolean = true
   override val isRewrite: Boolean = false
 
+  // Try to figure out if the symbol is Linear
+  private def isLinear(symbol: Symbol)(implicit doc: SemanticDocument): Boolean =
+    symbol.value == "com/earldouglas/linearscala/Linear#"
+
+  // Try to figure out if the type is a Linear
+  private def isALinear(tpe: SemanticType)(implicit doc: SemanticDocument): Boolean =
+    tpe match {
+      case TypeRef(prefix, symbol, typeArguments) => isALinear(symbol)
+      case StructuralType(WithType(types), declarations) => types.find(isALinear).isDefined
+      case _ => false
+    }
+
   // Try to figure out if the symbol represents a value that extends Linear
   private def isALinear(symbol: Symbol)(implicit doc: SemanticDocument): Boolean =
-    symbol.info match {
-      case Some(info) =>
-        info.signature match {
-          case ClassSignature(typeParameters, parents, self, declarations) =>
-            parents.find {
-              case TypeRef(prefix, symbol, typeArguments) if symbol.value == "com/earldouglas/linearscala/Linear#" => true
-              case _ => false
-            } match {
-              case Some(parent) => true
-              case None => false
-            }
-          case ValueSignature(TypeRef(prefix, symbol, typeArguments)) => isALinear(symbol)
-          case MethodSignature(typeParameters, parameterLists, returnType) =>
-            returnType match {
-              case TypeRef(prefix, symbol, typeArguments) => isALinear(symbol)
-              case _ => false
-            }
+    isLinear(symbol) || symbol.info.map(isALinear).getOrElse(false)
+
+  // Try to figure out if the symbol represents a value that extends Linear
+  private def isALinear(info: SymbolInformation)(implicit doc: SemanticDocument): Boolean =
+    info.signature match {
+      case ClassSignature(typeParameters, parents, self, declarations) =>
+        parents.find {
+          case TypeRef(prefix, parentSymbol, typeArguments) => isLinear(parentSymbol)
           case _ => false
+        } match {
+          case Some(parent) => true
+          case None => false
         }
-      case None => false
+      case ValueSignature(TypeRef(prefix, symbol, typeArguments)) => isALinear(symbol)
+      case ValueSignature(tpe) => isALinear(tpe)
+      case MethodSignature(typeParameters, parameterLists, returnType) => isALinear(returnType)
+      case _ => false
     }
 
   // Find all the terms that dereference a Linear value
@@ -60,7 +69,6 @@ final class LinearTypes extends SemanticRule("LinearTypes") {
     }
 
   override def fix(implicit doc: SemanticDocument): Patch = {
-
     val derefs: Map[Symbol, List[Term]] = findDerefs(doc)
     val refs: Iterable[Term] = findRefs(doc)
 
