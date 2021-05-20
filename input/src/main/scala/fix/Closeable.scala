@@ -12,7 +12,9 @@ import java.io.RandomAccessFile
  */
 trait ReadFromClosedCloseable {
 
-  def readLineAndCloseFile(f: RandomAccessFile): String = {
+  def readLineAndCloseFile(
+    f: RandomAccessFile
+  ): String = {
     val line = f.readLine()
     f.close()
     line
