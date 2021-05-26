@@ -1,5 +1,5 @@
-[![Build status](https://github.com/earldouglas/linear-scala/workflows/build/badge.svg)](https://github.com/earldouglas/linear-scala/actions)
-![Latest version](https://img.shields.io/github/tag/earldouglas/linear-scala.svg)
+[![Build Status][build-badge]][build-link]
+[![Release Artifacts][release-badge]][release-link]
 
 # linear-scala
 
@@ -124,3 +124,8 @@ $ sbt
 * https://gitlab.haskell.org/ghc/ghc/-/wikis/linear-types
 * https://en.wikipedia.org/wiki/Substructural_type_system#Linear_type_systems
 * https://github.com/ryanorendorff/lc-2018-linear-types
+
+[build-badge]: https://github.com/earldouglas/linear-scala/workflows/build/badge.svg "Build Status"
+[build-link]: https://github.com/earldouglas/linear-scala/actions "GitHub Actions"
+[release-link]: https://oss.sonatype.org/content/repositories/releases/com/earldouglas/linear-scala/ "Sonatype Releases"
+[release-badge]: https://img.shields.io/nexus/r/https/oss.sonatype.org/com.earldouglas/linear-scala "Sonatype Releases"
