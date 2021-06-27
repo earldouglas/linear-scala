@@ -85,6 +85,8 @@ trait FieldUsedTwice {
 See the tests in [input/src/main/scala/fix/](input/src/main/scala/fix/)
 for more examples.
 
+## References
+
 ### Linear Types
 
 * https://gitlab.haskell.org/ghc/ghc/-/wikis/linear-types
