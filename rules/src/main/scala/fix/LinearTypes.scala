@@ -5,13 +5,16 @@ import scala.meta.Term
 import scalafix.lint.Diagnostic
 import scalafix.v1._
 
-case class MultipleDerefs(t: Term, count: Int)(implicit doc: SemanticDocument) extends Diagnostic {
+case class MultipleDerefs(t: Term, count: Int)(implicit
+    doc: SemanticDocument
+) extends Diagnostic {
   override def position: Position = t.pos
   override def message: String =
     s"${t.symbol.displayName} is used ${count} times"
 }
 
-case class ZeroDerefs(t: Term)(implicit doc: SemanticDocument) extends Diagnostic {
+case class ZeroDerefs(t: Term)(implicit doc: SemanticDocument)
+    extends Diagnostic {
   override def position: Position = t.pos
   override def message: String =
     s"${t.symbol.displayName} is never used"
@@ -23,49 +26,77 @@ final class LinearTypes extends SemanticRule("LinearTypes") {
   override val isRewrite: Boolean = false
 
   // Try to figure out if the symbol is Linear
-  private def isLinear(symbol: Symbol)(implicit doc: SemanticDocument): Boolean =
+  private def isLinear(
+      symbol: Symbol
+  )(implicit doc: SemanticDocument): Boolean =
     symbol.value == "com/earldouglas/linearscala/Linear#"
 
   // Try to figure out if the type is a Linear
-  private def isALinear(tpe: SemanticType)(implicit doc: SemanticDocument): Boolean =
+  private def isALinear(
+      tpe: SemanticType
+  )(implicit doc: SemanticDocument): Boolean =
     tpe match {
       case TypeRef(prefix, symbol, typeArguments) => isALinear(symbol)
-      case StructuralType(WithType(types), declarations) => types.find(isALinear).isDefined
+      case StructuralType(WithType(types), declarations) =>
+        types.find(isALinear).isDefined
       case _ => false
     }
 
   // Try to figure out if the symbol represents a value that extends Linear
-  private def isALinear(symbol: Symbol)(implicit doc: SemanticDocument): Boolean =
+  private def isALinear(
+      symbol: Symbol
+  )(implicit doc: SemanticDocument): Boolean =
     isLinear(symbol) || symbol.info.map(isALinear).getOrElse(false)
 
   // Try to figure out if the symbol represents a value that extends Linear
-  private def isALinear(info: SymbolInformation)(implicit doc: SemanticDocument): Boolean =
+  private def isALinear(
+      info: SymbolInformation
+  )(implicit doc: SemanticDocument): Boolean =
     info.signature match {
-      case ClassSignature(typeParameters, parents, self, declarations) =>
+      case ClassSignature(
+            typeParameters,
+            parents,
+            self,
+            declarations
+          ) =>
         parents.find {
-          case TypeRef(prefix, parentSymbol, typeArguments) => isLinear(parentSymbol)
+          case TypeRef(prefix, parentSymbol, typeArguments) =>
+            isLinear(parentSymbol)
           case _ => false
         } match {
           case Some(parent) => true
-          case None => false
+          case None         => false
         }
-      case ValueSignature(TypeRef(prefix, symbol, typeArguments)) => isALinear(symbol)
+      case ValueSignature(TypeRef(prefix, symbol, typeArguments)) =>
+        isALinear(symbol)
       case ValueSignature(tpe) => isALinear(tpe)
-      case MethodSignature(typeParameters, parameterLists, returnType) => isALinear(returnType)
+      case MethodSignature(
+            typeParameters,
+            parameterLists,
+            returnType
+          ) =>
+        isALinear(returnType)
       case _ => false
     }
 
   // Find all the terms that dereference a Linear value
-  private def findDerefs(implicit doc: SemanticDocument): Map[Symbol, List[Term]] =
-    doc.tree.collect {
-      case t @ Term.Name(name) if t.isReference && isALinear(t.symbol) => t
-    }
-    .groupBy(_.symbol)
+  private def findDerefs(implicit
+      doc: SemanticDocument
+  ): Map[Symbol, List[Term]] =
+    doc.tree
+      .collect {
+        case t @ Term.Name(name)
+            if t.isReference && isALinear(t.symbol) =>
+          t
+      }
+      .groupBy(_.symbol)
 
   // Find all the terms that are references to a Linear value
   private def findRefs(implicit doc: SemanticDocument): Iterable[Term] =
     doc.tree.collect {
-      case t @ Term.Name(name) if !t.isReference && isALinear(t.symbol) => t
+      case t @ Term.Name(name)
+          if !t.isReference && isALinear(t.symbol) =>
+        t
     }
 
   override def fix(implicit doc: SemanticDocument): Patch = {
@@ -81,9 +112,9 @@ final class LinearTypes extends SemanticRule("LinearTypes") {
 
     // Find all Linear values that are never used
     val underused: Iterable[Diagnostic] =
-     refs
-       .filterNot(t => derefs.keySet.contains(t.symbol))
-       .map(t => ZeroDerefs(t))
+      refs
+        .filterNot(t => derefs.keySet.contains(t.symbol))
+        .map(t => ZeroDerefs(t))
 
     // Convert the above diagnostics into a Patch
     (overused ++ underused)
