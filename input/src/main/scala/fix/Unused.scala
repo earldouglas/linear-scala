@@ -5,16 +5,14 @@ package fix
 
 import com.earldouglas.linearscala.Linear
 
-/**
-  * Don't allow a [[Box]] field to be created but never dereferenced.
+/** Don't allow a [[Box]] field to be created but never dereferenced.
   */
 trait UnusedField {
   val box: Box = // assert: LinearTypes
     Box(42)
 }
 
-/**
-  * Don't allow a [[Box]] parameter to be declared but never dereferenced.
+/** Don't allow a [[Box]] parameter to be declared but never dereferenced.
   */
 trait UnusedParameter {
   def foo(
@@ -24,16 +22,14 @@ trait UnusedParameter {
     x.value
 }
 
-/**
-  * Don't allow a [[Box]] method to be created but never called.
+/** Don't allow a [[Box]] method to be created but never called.
   */
 trait UnusedMethod {
   def foo(): Box = // assert: LinearTypes
     Box(42)
 }
 
-/**
-  * Don't allow a [[Box]] value to be created but never dereferenced.
+/** Don't allow a [[Box]] value to be created but never dereferenced.
   */
 trait UnusedValue {
   def foo(): Unit = {
@@ -41,8 +37,7 @@ trait UnusedValue {
   }
 }
 
-/**
-  * Don't allow a [[Box]] binding in a for comprehension to be
+/** Don't allow a [[Box]] binding in a for comprehension to be
   * created but never dereferenced.
   */
 trait UnusedBinding {
@@ -53,8 +48,7 @@ trait UnusedBinding {
   } yield z
 }
 
-/**
-  * Don't allow a field with a [[Linear]] structural type to be
+/** Don't allow a field with a [[Linear]] structural type to be
   * created but never dereferenced.
   */
 trait UnusedFieldWithStructuralType {
@@ -62,8 +56,7 @@ trait UnusedFieldWithStructuralType {
     42.asInstanceOf[Int with Linear]
 }
 
-/**
-  * Don't allow a parameter with a [[Linear]] structural type to be
+/** Don't allow a parameter with a [[Linear]] structural type to be
   * declared but never dereferenced.
   */
 trait UnusedParameterWithStructuralType {

@@ -6,8 +6,7 @@ package fix
 import com.earldouglas.linearscala.Linear
 import java.io.RandomAccessFile
 
-/**
-  * Don't allow a [[Linear]] file to be dereferenced more than once,
+/** Don't allow a [[Linear]] file to be dereferenced more than once,
   * because it might already be closed.
   */
 trait ReadFromClosedCloseable {
