@@ -5,8 +5,7 @@ package fix
 
 import com.earldouglas.linearscala.Linear
 
-/**
-  * Don't allow a [[Box]] field to be dereferenced more than once.
+/** Don't allow a [[Box]] field to be dereferenced more than once.
   */
 trait FieldUsedTwice {
   val box: Box = Box(42)
@@ -14,8 +13,7 @@ trait FieldUsedTwice {
   println(box) // assert: LinearTypes
 }
 
-/**
-  * Don't allow a [[Box]] binding in a for comprehension to be
+/** Don't allow a [[Box]] binding in a for comprehension to be
   * dereferenced more than once.
   */
 trait BindingUsedTwice {
@@ -32,8 +30,7 @@ trait BindingUsedTwice {
   } yield (x, y, z) // assert: LinearTypes
 }
 
-/**
-  * Don't allow a field with a [[Linear]] structural type to be
+/** Don't allow a field with a [[Linear]] structural type to be
   * dereferenced more than once.
   */
 trait FieldWithStructuralTypeUsedTwice {
