@@ -10,14 +10,23 @@ case class MultipleDerefs(t: Term, count: Int)(implicit
 ) extends Diagnostic {
   override def position: Position = t.pos
   override def message: String =
-    s"${t.symbol.displayName} is used ${count} times"
+    s"${LinearTypes.name(t)} is used ${count} times"
 }
 
 case class ZeroDerefs(t: Term)(implicit doc: SemanticDocument)
     extends Diagnostic {
   override def position: Position = t.pos
   override def message: String =
-    s"${t.symbol.displayName} is never used"
+    s"${LinearTypes.name(t)} is never used"
+}
+
+object LinearTypes {
+  def name(t: Term)(implicit doc: SemanticDocument): String =
+    if (t.symbol.displayName.length > 0) {
+      t.symbol.displayName
+    } else {
+      t.toString()
+    }
 }
 
 final class LinearTypes extends SemanticRule("LinearTypes") {
