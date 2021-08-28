@@ -78,5 +78,3 @@ trait UnusedShadow {
     z <- Some(Box(x.value * y.value))
   } yield z
 }
-
-
