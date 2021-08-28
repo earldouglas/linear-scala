@@ -66,3 +66,17 @@ trait UnusedParameterWithStructuralType {
   ): Int =
     42
 }
+
+/** Don't allow a [[Box]] binding in a for comprehension to be
+  * shadowed but never dereferenced.
+  */
+trait UnusedShadow {
+  for {
+    x <- Some(Box(6)) // assert: LinearTypes
+    y <- Some(Box(7))
+    x <- Some(Box(8))
+    z <- Some(Box(x.value * y.value))
+  } yield z
+}
+
+
