@@ -12,7 +12,8 @@ trait UnusedField {
     Box(42)
 }
 
-/** Don't allow a [[Box]] parameter to be declared but never dereferenced.
+/** Don't allow a [[Box]] parameter to be declared but never
+  * dereferenced.
   */
 trait UnusedParameter {
   def foo(
@@ -37,8 +38,8 @@ trait UnusedValue {
   }
 }
 
-/** Don't allow a [[Box]] binding in a for comprehension to be
-  * created but never dereferenced.
+/** Don't allow a [[Box]] binding in a for comprehension to be created
+  * but never dereferenced.
   */
 trait UnusedBinding {
   for {
@@ -48,8 +49,8 @@ trait UnusedBinding {
   } yield z
 }
 
-/** Don't allow a field with a [[Linear]] structural type to be
-  * created but never dereferenced.
+/** Don't allow a field with a [[Linear]] structural type to be created
+  * but never dereferenced.
   */
 trait UnusedFieldWithStructuralType {
   val x: Int with Linear = // assert: LinearTypes
@@ -67,8 +68,8 @@ trait UnusedParameterWithStructuralType {
     42
 }
 
-/** Don't allow a [[Box]] binding in a for comprehension to be
-  * shadowed but never dereferenced.
+/** Don't allow a [[Box]] binding in a for comprehension to be shadowed
+  * but never dereferenced.
   */
 trait UnusedShadow {
   for {
