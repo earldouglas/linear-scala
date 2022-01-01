@@ -89,6 +89,7 @@ for more examples.
 
 ### Linear Types
 
-* https://gitlab.haskell.org/ghc/ghc/-/wikis/linear-types
-* https://en.wikipedia.org/wiki/Substructural_type_system#Linear_type_systems
-* https://github.com/ryanorendorff/lc-2018-linear-types
+* <https://earldouglas.com/talks/linear-scala.html>
+* <https://gitlab.haskell.org/ghc/ghc/-/wikis/linear-types>
+* <https://en.wikipedia.org/wiki/Substructural_type_system#Linear_type_systems>
+* <https://github.com/ryanorendorff/lc-2018-linear-types>
