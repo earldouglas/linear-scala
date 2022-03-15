@@ -1,0 +1,19 @@
+> clean
+$ copy src/main/examples/Linear.scala src/main/scala/
+> compile
+$ delete src/main/scala/
+
+> clean
+$ copy src/main/examples/FieldUsedTwice.scala src/main/scala/
+-> compile
+$ delete src/main/scala/
+
+> clean
+$ copy src/main/examples/UnusedField.scala src/main/scala/
+-> compile
+$ delete src/main/scala/
+
+> clean
+$ copy src/main/examples/UnusedParameter.scala src/main/scala/
+-> compile
+$ delete src/main/scala/

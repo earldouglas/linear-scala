@@ -31,6 +31,7 @@ $ sbt
 > set ThisBuild / version := "0.0.1"
 > library/publishSigned
 > +rules/publishSigned
+> plugin/publishSigned
 > sonatypeBundleRelease
 ```
 
