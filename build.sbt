@@ -52,3 +52,8 @@ lazy val tests = // boilerplate to be able to use scalafix-testkit
     .dependsOn(rules)
     .dependsOn(library)
     .enablePlugins(ScalafixTestkitPlugin)
+
+lazy val plugin =
+  project
+    .in(file("plugin"))
+    .settings(moduleName := "sbt-linear-scala")

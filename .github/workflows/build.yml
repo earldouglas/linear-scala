@@ -8,4 +8,6 @@ jobs:
     - uses: actions/setup-java@v1
       with:
         java-version: 8
-    - run: sbt scalafmtCheckAll tests/test
+    - run: sbt scalafmtCheckAll
+    - run: sbt tests/test
+    - run: sbt 'set ThisBuild / version := "0.1.0-SNAPSHOT"; library/publishLocal; +rules/publishLocal; plugin/scripted'
