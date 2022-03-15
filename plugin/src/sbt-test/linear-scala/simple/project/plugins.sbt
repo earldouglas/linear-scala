@@ -1,1 +1,1 @@
-addSbtPlugin("com.earldouglas" % "sbt-linear-scala" % "0.1.0-SNAPSHOT")
+addSbtPlugin("com.earldouglas" % "sbt-linear-scala" % sys.props("plugin.version"))

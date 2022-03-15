@@ -23,6 +23,7 @@ enablePlugins(SbtPlugin)
 addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % _root_.scalafix.sbt.BuildInfo.scalafixVersion)
 
 scriptedBufferLog := false
+scriptedLaunchOpts += "-Dplugin.version=" + version.value
 
 Compile / sourceGenerators += task {
   val dir = (Compile / sourceManaged).value
