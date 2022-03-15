@@ -13,39 +13,10 @@ Scalafix linter.
 
 ## Setup
 
-Configure your project to use Scalafix with SemanticDB enabled.
-
 *project/plugins.sbt:*
 
 ```
-addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.9.27")
-```
-
-*build.sbt*:
-
-```scala
-lazy val V = _root_.scalafix.sbt.BuildInfo
-
-libraryDependencies += "com.earldouglas" % "linear-scala" % "0.0.2"
-
-inThisBuild(
-  List( scalaVersion := V.scala213
-      , scalafixDependencies += "com.earldouglas" %% "linear-scala-scalafix" % "0.0.2"
-      , scalafixScalaBinaryVersion := CrossVersion.binaryScalaVersion(scalaVersion.value)
-      , semanticdbEnabled := true // enable SemanticDB
-      , semanticdbVersion := scalafixSemanticdb.revision // use Scalafix compatible version
-      )
-)
-
-scalafixOnCompile := true
-```
-
-*.scalafix.conf*:
-
-```
-rules = [
-  LinearTypes
-]
+addSbtPlugin("com.earldouglas" % "sbt-linear-scala" % "0.0.3")
 ```
 
 ## Usage
