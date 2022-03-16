@@ -27,13 +27,14 @@ Two modules are published from this project:
   `LinearTypes` rule
 
 ```
+$ export VERSION=0.0.1
 $ sbt
-> set ThisBuild / version := "0.0.1"
+> set ThisBuild / version := sys.env("VERSION")
 > library/publishSigned
 > +rules/publishSigned
 > plugin/publishSigned
 > sonatypeBundleRelease
-$ git tag 0.0.1
+$ git tag $VERSION
 $ git push --tags
 ```
 
