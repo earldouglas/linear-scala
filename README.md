@@ -15,7 +15,7 @@ Scalafix linter.
 
 *project/plugins.sbt:*
 
-```
+```scala
 addSbtPlugin("com.earldouglas" % "sbt-linear-scala" % "0.0.3")
 ```
 
