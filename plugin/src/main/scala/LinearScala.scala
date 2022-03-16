@@ -26,17 +26,11 @@ object LinearScala extends AutoPlugin {
     Seq(
       libraryDependencies +=
         "com.earldouglas" % "linear-scala" % LinearScalaBuildInfo.version,
-      ScalafixPlugin.autoImport.scalafixOnCompile := true,
-      ScalafixPlugin.autoImport.scalafixConfig := Some {
-        val d = IO.createTemporaryDirectory
-        val f = d / ".scalafix.conf"
-        IO.write(
-          f,
-          """|rules = [
-             |  LinearTypes
-             |]""".stripMargin
-        )
-        f
-      }
-    )
+      ScalafixPlugin.autoImport.scalafixOnCompile := true
+    ) ++ Seq(Compile, Test).map { c =>
+      c / ScalafixPlugin.autoImport.scalafix :=
+        (c / ScalafixPlugin.autoImport.scalafix)
+          .partialInput(" LinearTypes")
+          .evaluated
+    }
 }
