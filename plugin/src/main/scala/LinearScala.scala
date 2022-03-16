@@ -29,6 +29,8 @@ object LinearScala extends AutoPlugin {
       ScalafixPlugin.autoImport.scalafixOnCompile := true
     ) ++ Seq(Compile, Test).map { c =>
       c / ScalafixPlugin.autoImport.scalafix :=
-        (c / ScalafixPlugin.autoImport.scalafix).partialInput(" LinearTypes").evaluated
+        (c / ScalafixPlugin.autoImport.scalafix)
+          .partialInput(" LinearTypes")
+          .evaluated
     }
 }
