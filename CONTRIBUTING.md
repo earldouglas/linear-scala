@@ -33,6 +33,8 @@ $ sbt
 > +rules/publishSigned
 > plugin/publishSigned
 > sonatypeBundleRelease
+$ git tag 0.0.1
+$ git push --tags
 ```
 
 ## References
