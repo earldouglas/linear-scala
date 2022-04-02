@@ -20,7 +20,9 @@ scalacOptions ++=
 
 sbtPlugin := true
 enablePlugins(SbtPlugin)
-addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % _root_.scalafix.sbt.BuildInfo.scalafixVersion)
+addSbtPlugin(
+  "ch.epfl.scala" % "sbt-scalafix" % _root_.scalafix.sbt.BuildInfo.scalafixVersion
+)
 
 scriptedBufferLog := false
 scriptedLaunchOpts += "-Dplugin.version=" + version.value
@@ -36,7 +38,7 @@ Compile / sourceGenerators += task {
       "",
       s"object $className {",
       s"""  def version: String = "${version.value}" """,
-      "}",
+      "}"
     ).mkString("", "\n", "\n")
   )
   Seq(f)
