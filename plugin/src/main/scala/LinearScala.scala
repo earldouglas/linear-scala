@@ -1,10 +1,9 @@
 package com.earldouglas.linearscala
 
-import sbt._
 import sbt.Keys._
+import sbt._
 import sbt.plugins.JvmPlugin
 import scalafix.sbt.ScalafixPlugin
-import scalafix.internal.sbt.SemanticdbPlugin
 
 object LinearScala extends AutoPlugin {
 
@@ -17,9 +16,8 @@ object LinearScala extends AutoPlugin {
         "com.earldouglas" %% "linear-scala-scalafix" % LinearScalaBuildInfo.version,
       ScalafixPlugin.autoImport.scalafixScalaBinaryVersion :=
         CrossVersion.binaryScalaVersion(scalaVersion.value),
-      SemanticdbPlugin.semanticdbEnabled := true,
-      SemanticdbPlugin.semanticdbVersion :=
-        ScalafixPlugin.autoImport.scalafixSemanticdb.revision
+      semanticdbEnabled := true,
+      semanticdbVersion := ScalafixPlugin.autoImport.scalafixSemanticdb.revision
     )
 
   override val projectSettings: Seq[Def.Setting[_]] =
