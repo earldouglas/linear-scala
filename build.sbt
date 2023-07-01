@@ -3,7 +3,7 @@ lazy val V = _root_.scalafix.sbt.BuildInfo
 inThisBuild(
   List(
     scalaVersion := V.scala213,
-    crossScalaVersions := List(V.scala213, V.scala212, V.scala211),
+    crossScalaVersions := List(V.scala213, V.scala212),
     organization := "com.earldouglas",
     homepage := Some(
       url("https://github.com/earldouglas/linear-scala")
