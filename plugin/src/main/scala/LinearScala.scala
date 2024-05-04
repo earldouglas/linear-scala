@@ -14,8 +14,6 @@ object LinearScala extends AutoPlugin {
     Seq(
       ScalafixPlugin.autoImport.scalafixDependencies +=
         "com.earldouglas" %% "linear-scala-scalafix" % LinearScalaBuildInfo.version,
-      ScalafixPlugin.autoImport.scalafixScalaBinaryVersion :=
-        CrossVersion.binaryScalaVersion(scalaVersion.value),
       semanticdbEnabled := true,
       semanticdbVersion := ScalafixPlugin.autoImport.scalafixSemanticdb.revision
     )
